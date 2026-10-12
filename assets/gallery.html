@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' file: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Codex 龙娘表情</title>
+<style>
+:root{color-scheme:light dark;--paper:#faf8ff;--ink:#3d3450;--muted:#796c8b;--line:#e5deef;--surface:#fff;--accent:#7454aa;--soft:#eee7f8;--shadow:0 12px 42px #68538112}
+@media(prefers-color-scheme:dark){:root{--paper:#1d1926;--ink:#eee6fa;--muted:#b4a6c8;--line:#3b314d;--surface:#292232;--accent:#c9abf4;--soft:#403251;--shadow:none}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+main{max-width:1120px;margin:0 auto;padding:36px 28px 48px}header{display:flex;align-items:center;gap:18px;margin-bottom:25px}header img{width:76px;height:76px;object-fit:contain}h1{font-size:27px;font-weight:650;letter-spacing:.04em;margin:0}header p{color:var(--muted);margin:3px 0 0}.search{display:flex;gap:12px;align-items:center;margin-bottom:22px}.search input{width:100%;min-width:0;border:1px solid var(--line);border-radius:13px;padding:12px 16px;background:var(--surface);color:var(--ink)}#count{white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:28px;align-items:start}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.sticker{border:1px solid transparent;background:transparent;border-radius:16px;padding:9px 3px 10px;color:var(--ink);transition:background .15s,border-color .15s}.sticker:hover{background:var(--surface)}.sticker[aria-pressed=true]{background:var(--surface);border-color:var(--accent);box-shadow:var(--shadow)}.sticker img{width:100%;aspect-ratio:1;object-fit:contain;display:block}.sticker span{display:block;font-size:13px;text-align:center}aside{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:19px;box-shadow:var(--shadow)}#preview{display:block;width:100%;aspect-ratio:1;object-fit:contain}h2{font-size:19px;text-align:center;margin:9px 0 2px}#number{color:var(--muted);text-align:center;margin:0 0 17px}.actions{display:grid;gap:9px}.action{display:block;text-align:center;border:1px solid var(--line);border-radius:11px;padding:9px 10px;color:var(--ink);background:var(--paper);text-decoration:none}.action.primary{background:var(--soft);border-color:transparent}#status{font-size:13px;color:var(--muted);min-height:22px;margin:12px 0 0;text-align:center}#copy-fallback{width:100%;min-height:100px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);margin-top:10px}#empty{padding:35px 10px;color:var(--muted);text-align:center}footer{color:var(--muted);font-size:12px;margin-top:25px;text-align:center}[hidden]{display:none!important}
+@media(max-width:800px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:minmax(0,1fr) 230px;gap:18px}}
+@media(max-width:580px){main{padding:20px 15px 32px}h1{font-size:22px}header{gap:10px}header img{width:60px;height:60px}.layout{display:flex;flex-direction:column;gap:20px}aside{width:100%;display:grid;grid-template-columns:115px minmax(0,1fr);gap:0 14px;padding:15px}#preview{grid-row:1/5}h2{text-align:left;margin-top:0}#number{text-align:left;margin-bottom:10px}.actions{grid-template-columns:1fr}#status{grid-column:1/-1}#copy-fallback{grid-column:1/-1}.grid{width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}.collection{width:100%}aside{order:-1}}
+</style>
+</head>
+<body>
+<main>
+  <header><img src="stickers/01-roger.png" alt="挥手的龙娘"><div><h1>Codex 龙娘表情</h1><p>今天的心情，交给龙娘来表达。</p></div></header>
+  <div class="search"><input id="search" type="search" aria-label="搜索表情" placeholder="搜索：收到、思考、开工、晚安…"><span id="count" aria-live="polite">30 张</span></div>
+  <div class="layout">
+    <section class="collection" aria-label="表情列表"><div id="grid" class="grid"></div><p id="empty" hidden>没有找到这个表情，试试另一个词。</p></section>
+    <aside aria-label="所选表情">
+      <img id="preview" src="stickers/01-roger.png" alt="收到">
+      <h2 id="title">收到</h2><p id="number">01 / 30</p>
+      <div class="actions"><button id="copy" class="action primary" type="button">复制表情引用</button><button id="ask" class="action" type="button">复制点名指令</button><a id="download" class="action" href="stickers/01-roger.png" download="01-roger.png">下载 PNG</a></div>
+      <p id="status" aria-live="polite"></p><textarea id="copy-fallback" readonly aria-label="手动复制内容" hidden></textarea>
+    </aside>
+  </div>
+  <footer>30 个透明表情 · 保留原图像素 · 本地使用</footer>
+</main>
+<script id="catalog" type="application/json">{
+  "version": 1,
+  "stickers": [
+    {
+      "number": 1,
+      "id": "roger",
+      "label": "收到",
+      "keywords": [
+        "收到",
+        "明白",
+        "ok",
+        "roger",
+        "接住了"
+      ],
+      "file": "stickers/01-roger.png",
+      "size": [
+        265,
+        252
+      ],
+      "source_box": [
+        0,
+        0,
+        249,
+        236
+      ],
+      "padding": 8
+    },
+    {
+      "number": 2,
+      "id": "sleepy",
+      "label": "揉眼睛",
+      "keywords": [
+        "困了",
+        "刚醒",
+        "sleepy",
+        "累"
+      ],
+      "file": "stickers/02-sleepy.png",
+      "size": [
+        244,
+        249
+      ],
+      "source_box": [
+        240,
+        0,
+        468,
+        233
+      ],
+      "padding": 8
+    },
+    {
+      "number": 3,
+      "id": "thinking",
+      "label": "思考",
+      "keywords": [
+        "思考",
+        "想想",
+        "thinking",
+        "分析",
+        "查一查"
+      ],
+      "file": "stickers/03-thinking.png",
+      "size": [
+        245,
+        252
+      ],
+      "source_box": [
+        444,
+        0,
+        673,
+        236
+      ],
+      "padding": 8
+    },
+    {
+      "number": 4,
+      "id": "happy",
+      "label": "开心",
+      "keywords": [
+        "开心",
+        "微笑",
+        "happy",
+        "高兴"
+      ],
+      "file": "stickers/04-happy.png",
+      "size": [
+        250,
+        261
+      ],
+      "source_box": [
+        658,
+        0,
+        892,
+        245
+      ],
+      "padding": 8
+    },
+    {
+      "number": 5,
+      "id": "goodnight",
+      "label": "晚安",
+      "keywords": [
+        "晚安",
+        "睡觉",
+        "goodnight",
+        "抱枕"
+      ],
+      "file": "stickers/05-goodnight.png",
+      "size": [
+        270,
+        266
+      ],
+      "source_box": [
+        881,
+        0,
+        1135,
+        250
+      ],
+      "padding": 8
+    },
+    {
+      "number": 6,
+      "id": "working",
+      "label": "开工",
+      "keywords": [
+        "开工",
+        "工作",
+        "写代码",
+        "working",
+        "忙碌"
+      ],
+      "file": "stickers/06-working.png",
+      "size": [
+        253,
+        255
+      ],
+      "source_box": [
+        11,
+        224,
+        248,
+        463
+      ],
+      "padding": 8
+    },
+    {
+      "number": 7,
+      "id": "done",
+      "label": "完成",
+      "keywords": [
+        "完成",
+        "搞定",
+        "庆祝",
+        "done",
+        "成功"
+      ],
+      "file": "stickers/07-done.png",
+      "size": [
+        254,
+        251
+      ],
+      "source_box": [
+        233,
+        224,
+        471,
+        459
+      ],
+      "padding": 8
+    },
+    {
+      "number": 8,
+      "id": "confused",
+      "label": "疑惑",
+      "keywords": [
+        "疑惑",
+        "不懂",
+        "为什么",
+        "confused",
+        "问号"
+      ],
+      "file": "stickers/08-confused.png",
+      "size": [
+        250,
+        263
+      ],
+      "source_box": [
+        456,
+        223,
+        690,
+        470
+      ],
+      "padding": 8
+    },
+    {
+      "number": 9,
+      "id": "tea",
+      "label": "喝茶",
+      "keywords": [
+        "喝茶",
+        "休息",
+        "tea",
+        "歇会儿"
+      ],
+      "file": "stickers/09-tea.png",
+      "size": [
+        247,
+        261
+      ],
+      "source_box": [
+        679,
+        222,
+        910,
+        467
+      ],
+      "padding": 8
+    },
+    {
+      "number": 10,
+      "id": "rest",
+      "label": "趴桌",
+      "keywords": [
+        "趴桌",
+        "疲惫",
+        "卡住了",
+        "rest",
+        "累瘫"
+      ],
+      "file": "stickers/10-rest.png",
+      "size": [
+        254,
+        271
+      ],
+      "source_box": [
+        894,
+        224,
+        1132,
+        479
+      ],
+      "padding": 8
+    },
+    {
+      "number": 11,
+      "id": "welcome",
+      "label": "欢迎",
+      "keywords": [
+        "欢迎",
+        "抱抱",
+        "welcome",
+        "张开双手"
+      ],
+      "file": "stickers/11-welcome.png",
+      "size": [
+        269,
+        262
+      ],
+      "source_box": [
+        0,
+        446,
+        253,
+        692
+      ],
+      "padding": 8
+    },
+    {
+      "number": 12,
+      "id": "treasure",
+      "label": "珍藏",
+      "keywords": [
+        "珍藏",
+        "喜欢",
+        "宝贝",
+        "treasure",
+        "抱书"
+      ],
+      "file": "stickers/12-treasure.png",
+      "size": [
+        259,
+        252
+      ],
+      "source_box": [
+        234,
+        451,
+        477,
+        687
+      ],
+      "padding": 8
+    },
+    {
+      "number": 13,
+      "id": "heart-eyes",
+      "label": "心动",
+      "keywords": [
+        "心动",
+        "爱心眼",
+        "heart-eyes",
+        "好喜欢"
+      ],
+      "file": "stickers/13-heart-eyes.png",
+      "size": [
+        251,
+        258
+      ],
+      "source_box": [
+        462,
+        450,
+        697,
+        692
+      ],
+      "padding": 8
+    },
+    {
+      "number": 14,
+      "id": "shy",
+      "label": "害羞",
+      "keywords": [
+        "害羞",
+        "捂脸",
+        "shy",
+        "脸红"
+      ],
+      "file": "stickers/14-shy.png",
+      "size": [
+        246,
+        253
+      ],
+      "source_box": [
+        686,
+        448,
+        916,
+        685
+      ],
+      "padding": 8
+    },
+    {
+      "number": 15,
+      "id": "stumped",
+      "label": "挠头",
+      "keywords": [
+        "挠头",
+        "犯难",
+        "棘手",
+        "stumped",
+        "头疼"
+      ],
+      "file": "stickers/15-stumped.png",
+      "size": [
+        261,
+        259
+      ],
+      "source_box": [
+        900,
+        450,
+        1145,
+        693
+      ],
+      "padding": 8
+    },
+    {
+      "number": 16,
+      "id": "love",
+      "label": "送你爱心",
+      "keywords": [
+        "送你爱心",
+        "爱你",
+        "love",
+        "爱心"
+      ],
+      "file": "stickers/16-love.png",
+      "size": [
+        269,
+        257
+      ],
+      "source_box": [
+        0,
+        678,
+        253,
+        919
+      ],
+      "padding": 8
+    },
+    {
+      "number": 17,
+      "id": "help",
+      "label": "伸手",
+      "keywords": [
+        "伸手",
+        "给我",
+        "帮你",
+        "help",
+        "搭把手"
+      ],
+      "file": "stickers/17-help.png",
+      "size": [
+        259,
+        260
+      ],
+      "source_box": [
+        235,
+        679,
+        478,
+        923
+      ],
+      "padding": 8
+    },
+    {
+      "number": 18,
+      "id": "cheer",
+      "label": "加油",
+      "keywords": [
+        "加油",
+        "冲鸭",
+        "cheer",
+        "努力"
+      ],
+      "file": "stickers/18-cheer.png",
+      "size": [
+        247,
+        263
+      ],
+      "source_box": [
+        467,
+        677,
+        698,
+        924
+      ],
+      "padding": 8
+    },
+    {
+      "number": 19,
+      "id": "ta-da",
+      "label": "请看",
+      "keywords": [
+        "请看",
+        "展示",
+        "双手",
+        "ta-da",
+        "成果"
+      ],
+      "file": "stickers/19-ta-da.png",
+      "size": [
+        258,
+        255
+      ],
+      "source_box": [
+        684,
+        674,
+        926,
+        913
+      ],
+      "padding": 8
+    },
+    {
+      "number": 20,
+      "id": "writing",
+      "label": "记录",
+      "keywords": [
+        "记录",
+        "记下",
+        "写字",
+        "writing",
+        "笔记"
+      ],
+      "file": "stickers/20-writing.png",
+      "size": [
+        235,
+        246
+      ],
+      "source_box": [
+        914,
+        683,
+        1133,
+        913
+      ],
+      "padding": 8
+    },
+    {
+      "number": 21,
+      "id": "letter",
+      "label": "读信",
+      "keywords": [
+        "读信",
+        "letter",
+        "读消息",
+        "信"
+      ],
+      "file": "stickers/21-letter.png",
+      "size": [
+        259,
+        254
+      ],
+      "source_box": [
+        0,
+        907,
+        243,
+        1145
+      ],
+      "padding": 8
+    },
+    {
+      "number": 22,
+      "id": "okay",
+      "label": "好的",
+      "keywords": [
+        "好的",
+        "没问题",
+        "耶",
+        "okay",
+        "胜利"
+      ],
+      "file": "stickers/22-okay.png",
+      "size": [
+        244,
+        251
+      ],
+      "source_box": [
+        236,
+        906,
+        464,
+        1141
+      ],
+      "padding": 8
+    },
+    {
+      "number": 23,
+      "id": "excited",
+      "label": "期待",
+      "keywords": [
+        "期待",
+        "惊喜",
+        "excited",
+        "纸飞机"
+      ],
+      "file": "stickers/23-excited.png",
+      "size": [
+        275,
+        254
+      ],
+      "source_box": [
+        449,
+        909,
+        708,
+        1147
+      ],
+      "padding": 8
+    },
+    {
+      "number": 24,
+      "id": "mail",
+      "label": "收到来信",
+      "keywords": [
+        "收到来信",
+        "mail",
+        "来信",
+        "消息来了"
+      ],
+      "file": "stickers/24-mail.png",
+      "size": [
+        251,
+        250
+      ],
+      "source_box": [
+        688,
+        908,
+        923,
+        1142
+      ],
+      "padding": 8
+    },
+    {
+      "number": 25,
+      "id": "delivered",
+      "label": "消息送达",
+      "keywords": [
+        "消息送达",
+        "送达",
+        "信封",
+        "delivered",
+        "发好了"
+      ],
+      "file": "stickers/25-delivered.png",
+      "size": [
+        245,
+        248
+      ],
+      "source_box": [
+        916,
+        906,
+        1145,
+        1138
+      ],
+      "padding": 8
+    },
+    {
+      "number": 26,
+      "id": "touched",
+      "label": "感动",
+      "keywords": [
+        "感动",
+        "眼泪",
+        "委屈",
+        "touched",
+        "谢谢"
+      ],
+      "file": "stickers/26-touched.png",
+      "size": [
+        272,
+        265
+      ],
+      "source_box": [
+        0,
+        1125,
+        256,
+        1374
+      ],
+      "padding": 8
+    },
+    {
+      "number": 27,
+      "id": "please",
+      "label": "拜托",
+      "keywords": [
+        "拜托",
+        "求求",
+        "please",
+        "祈祷"
+      ],
+      "file": "stickers/27-please.png",
+      "size": [
+        252,
+        265
+      ],
+      "source_box": [
+        235,
+        1125,
+        471,
+        1374
+      ],
+      "padding": 8
+    },
+    {
+      "number": 28,
+      "id": "hug-heart",
+      "label": "抱紧爱心",
+      "keywords": [
+        "抱紧爱心",
+        "珍惜",
+        "hug-heart",
+        "抱心"
+      ],
+      "file": "stickers/28-hug-heart.png",
+      "size": [
+        249,
+        254
+      ],
+      "source_box": [
+        460,
+        1122,
+        693,
+        1360
+      ],
+      "padding": 8
+    },
+    {
+      "number": 29,
+      "id": "hello",
+      "label": "打招呼",
+      "keywords": [
+        "打招呼",
+        "你好",
+        "hello",
+        "嗨",
+        "挥手"
+      ],
+      "file": "stickers/29-hello.png",
+      "size": [
+        259,
+        257
+      ],
+      "source_box": [
+        680,
+        1121,
+        923,
+        1362
+      ],
+      "padding": 8
+    },
+    {
+      "number": 30,
+      "id": "morning",
+      "label": "早安",
+      "keywords": [
+        "早安",
+        "早上好",
+        "morning",
+        "太阳"
+      ],
+      "file": "stickers/30-morning.png",
+      "size": [
+        257,
+        253
+      ],
+      "source_box": [
+        904,
+        1123,
+        1145,
+        1360
+      ],
+      "padding": 8
+    }
+  ]
+}
+</script>
+<script>
+(() => {
+  const items = JSON.parse(document.getElementById('catalog').textContent).stickers;
+  const byId = id => document.getElementById(id);
+  const grid = byId('grid');
+  let selected = items[0];
+  function select(item) {
+    selected = item;
+    byId('preview').src = item.file;
+    byId('preview').alt = item.label;
+    byId('title').textContent = item.label;
+    byId('number').textContent = `${String(item.number).padStart(2,'0')} / 30`;
+    byId('download').href = item.file;
+    byId('download').download = item.file.split('/').pop();
+    byId('status').textContent = '';
+    byId('copy-fallback').hidden = true;
+    grid.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.number) === item.number)));
+  }
+  function render() {
+    const query = byId('search').value.trim().toLowerCase();
+    const visible = items.filter(item => !query || [item.id,item.label,String(item.number),String(item.number).padStart(2,'0'),...item.keywords].some(word => word.toLowerCase().includes(query)));
+    grid.replaceChildren();
+    for (const item of visible) {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'sticker'; button.dataset.number = item.number;
+      button.setAttribute('aria-label', `${String(item.number).padStart(2,'0')} ${item.label}`);
+      button.setAttribute('aria-pressed', String(item.number === selected.number));
+      const img = document.createElement('img'); img.src = item.file; img.alt = ''; img.loading = 'lazy';
+      const title = document.createElement('span'); title.textContent = item.label;
+      button.append(img,title); button.addEventListener('click',() => select(item)); grid.append(button);
+    }
+    byId('count').textContent = `${visible.length} 张`;
+    byId('empty').hidden = visible.length > 0;
+  }
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); byId('status').textContent = '已复制，可以粘贴到聊天里。'; byId('copy-fallback').hidden = true; }
+    catch { const field = byId('copy-fallback'); field.hidden = false; field.value = text; field.focus(); field.select(); byId('status').textContent = '已选中内容，请按 Ctrl+C 或长按复制。'; }
+  }
+  byId('copy').addEventListener('click', () => {
+    const url = new URL(selected.file,location.href);
+    const path = url.protocol === 'file:' ? decodeURIComponent(url.pathname).replace(/^\/([A-Za-z]:\/)/,'$1') : url.href;
+    copy(`![Codex龙娘·${selected.label}](${path})`);
+  });
+  byId('ask').addEventListener('click', () => copy(`用 $codex-dragon-stickers 发一个「${selected.label}」表情。`));
+  byId('search').addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>

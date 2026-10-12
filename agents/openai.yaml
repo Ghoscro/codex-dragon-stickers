@@ -1,0 +1,9 @@
+interface:
+  display_name: "Codex 龙娘表情"
+  short_description: "聊天与工作回应按语气随机配龙娘表情，避开上一张，支持点名选图。"
+  default_prompt: "用 $codex-dragon-stickers 按本轮语气随机配图，并避开当前对话上一张表情。"
+  icon_small: "./assets/stickers/01-roger.png"
+  icon_large: "./assets/stickers/01-roger.png"
+  brand_color: "#a78bfa"
+policy:
+  allow_implicit_invocation: true
